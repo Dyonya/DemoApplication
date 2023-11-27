@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <script src="hello.js"></script>
+    <title>React App</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root">
+      <h1>Restaurant Management</h1>
+
+      <form id="createRestaurantForm">
+        <h2>Create New Restaurant</h2>
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+        <label for="city">City:</label>
+        <input type="text" id="city" required>
+        <label for="estimatedCost">Estimated Cost:</label>
+        <input type="number" id="estimatedCost" required>
+        <label for="averageRating">Average Rating:</label>
+        <input type="text" id="averageRating" required>
+        <label for="votes">Votes:</label>
+        <input type="number" id="votes" required>
+        <button type="button" onclick="createRestaurant()">Create Restaurant</button>
+      </form>
+
+      <div id="restaurantList"></div>
+
+      <script>
+        async function createRestaurant() {
+          const name = document.getElementById('name').value;
+          const city = document.getElementById('city').value;
+          const estimatedCost = document.getElementById('estimatedCost').value;
+          const averageRating = document.getElementById('averageRating').value;
+          const votes = document.getElementById('votes').value;
+
+          const response = await fetch('http://localhost:8080/restaurant', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              name,
+              city,
+              estimatedCost,
+              averageRating,
+              votes,
+            }),
+          });
+
+          if (response.status === 201) {
+            // Restaurant created successfully, refresh the restaurant list
+            fetchRestaurants();
+          } else {
+            alert('Failed to create restaurant');
+          }
+        }
+
+        async function fetchRestaurants() {
+          const response = await fetch('http://localhost:8080/restaurant');
+          const restaurants = await response.json();
+
+          const restaurantListDiv = document.getElementById('restaurantList');
+          restaurantListDiv.innerHTML = '';
+
+          restaurants.forEach(restaurant => {
+            const restaurantDiv = document.createElement('div');
+            restaurantDiv.className = 'restaurant';
+            restaurantDiv.innerHTML = `
+                    <p><strong>Name:</strong> ${restaurant.name}</p>
+                    <p><strong>City:</strong> ${restaurant.city}</p>
+                    <p><strong>Estimated Cost:</strong> ${restaurant.estimatedCost}</p>
+                    <p><strong>Average Rating:</strong> ${restaurant.averageRating}</p>
+                    <p><strong>Votes:</strong> ${restaurant.votes}</p>
+                    <button onclick="updateRestaurant(${restaurant.id})">Update</button>
+                    <button onclick="deleteRestaurant(${restaurant.id})">Delete</button>
+                    <hr>
+                `;
+            restaurantListDiv.appendChild(restaurantDiv);
+          });
+        }
+
+        async function updateRestaurant(id) {
+          // Implement the logic to update the restaurant with the given id
+          console.log(`Update restaurant with id ${id}`);
+        }
+
+        async function deleteRestaurant(id) {
+          const response = await fetch(`http://localhost:8080/restaurant/${id}`, {
+            method: 'DELETE',
+          });
+
+          if (response.status === 200) {
+            // Restaurant deleted successfully, refresh the restaurant list
+            fetchRestaurants();
+          } else {
+            alert('Failed to delete restaurant');
+          }
+        }
+
+        // Fetch restaurants when the page loads
+        fetchRestaurants();
+      </script>
+
+
+    </div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+  </body>
+</html>
