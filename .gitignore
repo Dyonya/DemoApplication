@@ -27,3 +27,45 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+# Compiled files
+node_modules/
+dist/
+target/
+
+# Logs and databases
+*.log
+*.sqlite
+*.log*
+*.db
+
+# IDE-specific files
+.idea/
+.vscode/
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Environment configuration
+.env
+.env.local
+
+# Maven
+.mvn/
+
+# Gradle
+build/
+
+# Angular
+.angular-cli.json
+*.ng-factory.js
+*.ngstyle.js
+
+# Compiled TypeScript
+*.js
+*.js.map
+
+# Dependencies
+package-lock.json
+yarn.lock

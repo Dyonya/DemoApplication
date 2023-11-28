@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.exception.RestaurantNotFoundException;
 import com.example.demo.model.Restaurant;
 import com.example.demo.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +25,13 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public List<Restaurant> getRestaurantsByCity(String city) {
-        return restaurantRepository.findByCity(city);
+        return restaurantRepository.getRestaurantsByCity(city);
     }
 
     @Override
     public Restaurant getRestaurantById(Long id) {
-        return restaurantRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Restaurant not found with id: " + id));
+        return restaurantRepository.findById(id)//rewrite
+                .orElseThrow(() -> new RestaurantNotFoundException(id));
     }
 
     @Override

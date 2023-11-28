@@ -32,10 +32,16 @@ public class RestaurantController {
     @GetMapping
     public ResponseEntity<List<Restaurant>> getAllRestaurants() {
             List<Restaurant> restaurants = restaurantService.getAllRestaurants();
+        // Add HATEOAS links to each restaurant
+        for (Restaurant restaurant : restaurants) {
+            restaurant.addSelfLink();
+            restaurant.addUpdateLink();
+            restaurant.addDeleteLink();
+        }
             return new ResponseEntity<>(restaurants, HttpStatus.OK);
     }
 
-    @GetMapping("/query{city}")
+    @GetMapping("/query/{city}")//+param value
     public ResponseEntity<List<Restaurant>> getRestaurantsByCity(@PathVariable String city) {
             List<Restaurant> restaurants = restaurantService.getRestaurantsByCity(city);
             return new ResponseEntity<>(restaurants, HttpStatus.OK);
@@ -43,9 +49,16 @@ public class RestaurantController {
 
     @GetMapping("/query/{id}")
     public ResponseEntity<Restaurant> getRestaurantById(@PathVariable Long id) {
-            Restaurant restaurant = restaurantService.getRestaurantById(id);
-            return new ResponseEntity<>(restaurant, HttpStatus.OK);
+        Restaurant restaurant = restaurantService.getRestaurantById(id);
+
+        // Add HATEOAS links
+        restaurant.addSelfLink();
+        restaurant.addUpdateLink();
+        restaurant.addDeleteLink();
+
+        return new ResponseEntity<>(restaurant, HttpStatus.OK);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRestaurant(@PathVariable Long id) {

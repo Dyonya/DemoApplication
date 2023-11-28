@@ -1,5 +1,7 @@
 package com.example.demo.controller;
+
 import com.example.demo.exception.RestExceptionHandler;
+import com.example.demo.exception.RestaurantNotFoundException;
 import com.example.demo.model.Restaurant;
 import com.example.demo.request.RatingUpdateRequest;
 import com.example.demo.service.RestaurantService;
@@ -47,23 +49,23 @@ class RestaurantControllerTest {
                 .build();
     }
 
-//    @Test
-//    void testAddRestaurant() throws Exception {
-//        // Arrange
-//        Restaurant restaurant = new Restaurant();
-//        restaurant.setName("Test Restaurant");
-//        restaurant.setCity("Test City");
-//        restaurant.setEstimatedCost(1000);
-//        restaurant.setAverageRating("4.5");
-//        restaurant.setVotes(100);
-//
-//        // Act and Assert
-//        mockMvc.perform(MockMvcRequestBuilders.post("/restaurant")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(objectMapper.writeValueAsString(restaurant)))
-//                .andExpect(MockMvcResultMatchers.status().isCreated());
-//        verify(restaurantService, times(1)).addRestaurant(restaurant);
-//    }
+    @Test
+    void testAddRestaurant() throws Exception {
+        // Arrange
+        Restaurant restaurant = new Restaurant();
+        restaurant.setName("Test Restaurant");
+        restaurant.setCity("Test City");
+        restaurant.setEstimatedCost(1000);
+        restaurant.setAverageRating("4.5");
+        restaurant.setVotes(100);
+
+        // Act and Assert
+        mockMvc.perform(MockMvcRequestBuilders.post("/restaurant")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(restaurant)))
+                .andExpect(MockMvcResultMatchers.status().isCreated());
+        verify(restaurantService, times(1)).addRestaurant(restaurant);
+    }
 
     @Test
     void testUpdateRestaurantRating() throws Exception {
@@ -120,37 +122,37 @@ class RestaurantControllerTest {
                 .andExpect(jsonPath("$[1].id").value(2));
     }
 
-//    @Test
-//    void testGetRestaurantById() throws Exception {
-//        // Arrange
-//        Long id = 1L;
-//        Restaurant restaurant = createRestaurant("Test Restaurant", "Test City", 1000, "4.5", 100);
-//        restaurant.setId(id);
-//
-//        when(restaurantService.getRestaurantById(id)).thenReturn(restaurant);
-//
-//        // Act and Assert
-//        mockMvc.perform(MockMvcRequestBuilders.get("/restaurant/query?id={id}", id))
-//                .andExpect(MockMvcResultMatchers.status().isOk())
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Test Restaurant"))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.city").value("Test City"))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.estimatedCost").value(1000))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.averageRating").value("4.5"))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.votes").value(100));
-//    }
-//
-//    @Test
-//    void testGetRestaurantById_NotFound() throws Exception {
-//        // Arrange
-//        Long id = 1L;
-//
-//        when(restaurantService.getRestaurantById(id)).thenThrow(new RestaurantNotFoundException(1L));
-//
-//        // Act and Assert
-//        mockMvc.perform(MockMvcRequestBuilders.get("/restaurant/query?id={id}", id))
-//                .andExpect(MockMvcResultMatchers.status().isNotFound());
-//    }
+    @Test
+    void testGetRestaurantById() throws Exception {
+        // Arrange
+        Long id = 1L;
+        Restaurant restaurant = createRestaurant("Test Restaurant", "Test City", 1000, "4.5", 100);
+        restaurant.setId(id);
+
+        when(restaurantService.getRestaurantById(id)).thenReturn(restaurant);
+
+        // Act and Assert
+        mockMvc.perform(MockMvcRequestBuilders.get("/restaurant/query?id={id}", id))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Test Restaurant"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.city").value("Test City"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.estimatedCost").value(1000))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.averageRating").value("4.5"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.votes").value(100));
+    }
+
+    @Test
+    void testGetRestaurantById_NotFound() throws Exception {
+        // Arrange
+        Long id = 1L;
+
+        when(restaurantService.getRestaurantById(id)).thenThrow(new RestaurantNotFoundException(1L));
+
+        // Act and Assert
+        mockMvc.perform(MockMvcRequestBuilders.get("/restaurant/query?id={id}", id))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
 
     @Test
     void testDeleteRestaurant() throws Exception {

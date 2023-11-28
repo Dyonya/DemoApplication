@@ -1,28 +1,15 @@
-# Getting Started
+# Instructions
+    Java ver - 21
+	id 'org.springframework.boot' version '3.1.5'
+	id 'io.spring.dependency-management' version '1.1.3'
 
-### Reference Documentation
-For further reference, please consider the following sections:
 
-* [Official Gradle documentation](https://docs.gradle.org)
-* [Spring Boot Gradle Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/3.1.5/gradle-plugin/reference/html/)
-* [Create an OCI image](https://docs.spring.io/spring-boot/docs/3.1.5/gradle-plugin/reference/html/#build-image)
-* [Spring Web](https://docs.spring.io/spring-boot/docs/3.1.5/reference/htmlsingle/index.html#web)
-* [Spring Data JPA](https://docs.spring.io/spring-boot/docs/3.1.5/reference/htmlsingle/index.html#data.sql.jpa-and-spring-data)
-
-### Guides
-The following guides illustrate how to use some features concretely:
-
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/rest/)
-* [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
-
-### Additional Links
-These additional references should also help you:
-
-* [Gradle Build Scans – insights for your project's build](https://scans.gradle.com#gradle)
-
-# RestaurantCollectionAPI
+* To check Actuator use: curl localhost:8080/actuator/health
+* To check Security LDAP Settings user: "bob", password: "bobspassword"
+* Frontend – src/main/resources/templates 
+* Restfull (HATEOAS) endpoint – restaurants
+## The Task
+### RestaurantCollectionAPI
 
 A company is launching a new service that provides details of restaurants spread across 
 multiple cities. A 'restaurant collection' needs to be created, and as part of this challenge, 
@@ -65,3 +52,10 @@ The following APIs need to be implemented:
 - Deleting restaurant by id - DELETE request to endpoint /restaurant/{id} should delete the corresponding restaurant.
 - Sort the restaurants according to rating - GET request to endpoint /restaurant/sort should return restaurants sorted as per their rating.
 
+REQUIREMENTS
+DB
+JAVA
+PASS
+
+INTELLIJ SETUP
+GIT IGNORE BUILD

@@ -50,7 +50,7 @@ class RestaurantServiceImplTest {
         Restaurant restaurant2 = new Restaurant();
         restaurant2.setCity(city);
 
-        when(restaurantRepository.findByCity(city)).thenReturn(Arrays.asList(restaurant1, restaurant2));
+        when(restaurantRepository.getRestaurantsByCity(city)).thenReturn(Arrays.asList(restaurant1, restaurant2));
 
         // Act
         List<Restaurant> result = restaurantService.getRestaurantsByCity(city);

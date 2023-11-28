@@ -1,12 +1,17 @@
 package com.example.demo.model;
 
+import com.example.demo.controller.RestaurantController;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import org.springframework.hateoas.RepresentationModel;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Entity
-public class Restaurant {
+public class Restaurant extends RepresentationModel<Restaurant>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -87,6 +92,19 @@ public class Restaurant {
                 ", averageRating='" + averageRating + '\'' +
                 ", votes=" + votes +
                 '}';
+    }
+
+    // Add HATEOAS links
+    public void addSelfLink() {
+        add(linkTo(methodOn(RestaurantController.class).getRestaurantById(id)).withSelfRel());
+    }
+
+    public void addUpdateLink() {
+        add(linkTo(methodOn(RestaurantController.class).updateRestaurantRating(id, null)).withRel("update"));
+    }
+
+    public void addDeleteLink() {
+        add(linkTo(methodOn(RestaurantController.class).deleteRestaurant(id)).withRel("delete"));
     }
 }
 

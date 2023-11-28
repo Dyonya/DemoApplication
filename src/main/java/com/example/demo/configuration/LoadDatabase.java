@@ -20,6 +20,7 @@ class LoadDatabase {
             log.info("Preloading " + repository.save(new Restaurant(1L,"Miami", "Byg Cheeseburger", 1600, "4.9", 16203)));
             log.info("Preloading " + repository.save(new Restaurant(2L,"New York", "Food Palace", 1800, "4.5", 12000)));
             log.info("Preloading " + repository.save(new Restaurant(3L,"Los Angeles", "Tasty Bites", 2000, "4.8", 15000)));
+            log.info("Preloading " + repository.save(new Restaurant(4L,"New York", "Cheesecake Palace", 1700, "4.7", 13000)));
         };
     }
 }
